@@ -7,7 +7,7 @@ heroImage: "/blog-placeholder-2.jpg"
 
 We followed the [tutorial](https://docs.astro.build/en/tutorial/0-introduction/) to create a blog post using astro and to [deploy it using netlify](https://docs.astro.build/en/tutorial/1-setup/5/). That gave us a netlify address: `jonathanmv.netlify.app`. However, we wanted to serve the blog from the [jonathanmv.com](https://jonathanmv.com) domain, which I had already set up with GoDaddy.
 
-First, we went to the [jonathanmv domain management in netlify](https://app.netlify.com/sites/jonathanmv/domain-management). The name of my website in netlify is `jonathanmv`. You need to change the name in the url to match yours.
+First, we went to the jonathanmv domain management in netlify: `Netlify > Sites > joanthanmv > Domain Management`.
 
 Then I had to click a button saying `Add Domain` and type my domain. Finally, I had to click a link saying `Awaiting External DNS`. That showed a list of nameserver names that I had to change in GoDaddy.
 
@@ -39,3 +39,7 @@ $ dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 ```
 
 After clearing my DNS Cache, I went to my browser and reloaded the webpage. I saw that [my astro blog](https://jonathanmv.com) deployed using netlify was now loading from my domain parked on GoDaddy.
+
+## One Last Step
+
+You need to go back to Netlify and scroll to the bottom in the `Domain Management` of your website to verify the DNS. This will create the right SSL Certificates for your webiste and visitors won't see a `Not Secure` message on their address bar next to your domain.
