@@ -1,0 +1,51 @@
+---
+title: "Follow account on Twitter/X using Playwright"
+description: "Use Playwright to randomly follow an account on Twitter/X"
+pubDate: "May 25 2024"
+heroImage: "/blog-placeholder-4.jpg"
+---
+
+We start with an authenticated account. If you'd like to know how to authenticate on Twitter/X using Playwright, read [this post](/blog/tweet-using-playwright).
+
+Much of the code is similar to what we did before. So let's go straight to it
+
+```ts
+  await goHome(page);
+
+  // Open a tweet
+  const showMore = await page.$("span:has-text('Show more')");
+  await showMore.click();
+  await page.waitForSelector("span:has-text('Post')");
+
+  // Go to the author's profile
+  const tweetUrl = page.url(); // https://x.com/username/status/2342345
+  const username = tweetUrl.split("/")[3];
+  await page.goto(`https://x.com/${username}`);
+
+  // Open its "following" list
+  await page.click("a[href*='/following']");
+
+  // follow the first 3 users
+  const followButtons = await page
+    .locator("//span[contains(text(), 'Follow')]")
+    .all();
+  for (let i = 0; i < 3; i++) {
+    await followButtons[i].click();
+  }
+```
+
+The [source code](https://github.com/michalevids/playwright-utils/blob/5a59ffea1d78284556649a19ec0adff2a47c1ffa/scripts/twitter/follow-from-following.ts#L17) is a bit different.
+It has intentional wait-times. My intention is to make the behavior less robotic and more human by introducing delays.
+
+I'm still learning Playwright. While doing this, I learned how to get all elements using a [locator](https://playwright.dev/docs/locators).
+Before, I only knew how to click on an element. This time, I didn't want to click on all "Follow" buttons. So, I listed `all` elements and then clicked on some of them.
+
+Getting all elements is considered a [rare case](https://playwright.dev/docs/locators#rare-use-cases) by Playwright, haha.
+
+### The code
+
+Find the code [here](https://github.com/michalevids/playwright-utils) and a video demo below. Thanks for reading!
+
+import { YouTube } from '@astro-community/astro-embed-youtube';
+
+<YouTube id="p5Qs5LrCGeg" />
