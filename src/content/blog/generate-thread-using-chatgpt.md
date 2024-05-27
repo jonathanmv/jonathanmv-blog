@@ -5,7 +5,7 @@ pubDate: "May 27 2024"
 heroImage: "/blog-placeholder-2.jpg"
 ---
 
-[This is the first thread](https://x.com/MichaleVids/status/1794808439975358935) we posted.
+[This is the first thread](https://x.com/MichaleVids/status/1794808433910415653) we posted.
 
 I described how I used [Playwright to post a thread on Twitter/X](/blog/thread-using-playwright).
 That's an essential part of building self-managed social media account. Our system needs a way to generate content and post it. Until now, I covered how to post. In this article I show how to generate the content to post.
