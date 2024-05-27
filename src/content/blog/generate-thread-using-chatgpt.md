@@ -1,26 +1,28 @@
 ---
-title: "Generate Twitter/X Thread using ChatGPT"
+title: "Generate a Twitter/X Thread using ChatGPT"
 description: "Using ChatGPT to generate a thread on Twitter/X"
 pubDate: "May 27 2024"
 heroImage: "/blog-placeholder-2.jpg"
 ---
 
+[This is the first thread](https://x.com/MichaleVids/status/1794808439975358935) we posted.
+
 I described how I used [Playwright to post a thread on Twitter/X](/blog/thread-using-playwright).
-That's an essential part of building self-managed social media account. Our system needs to be able to generate the content and post it. Until now, I covered how to post. In this article I show how to generate the content to post.
+That's an essential part of building self-managed social media account. Our system needs a way to generate content and post it. Until now, I covered how to post. In this article I show how to generate the content to post.
 
 Enter, unsurprinsingly, ChatGPT.
 
 I used ChatGPT to give me an idea on how to start building a self-managed social media account.
 It suggested to created agents with different roles: `writer`, `engagement`, `trends analyzer`, `spam`, among others.
 
-It also provided me with some code examples using the Twitter API. Since I'll be using Playwright for the interactions, most of the suggested code was discarded. But I kept the concept of using _agents_.
+It also provided me with code examples using the Twitter API. Since I'll be using Playwright for the interactions, most of the suggested code was discarded. But I kept the concept of using _agents_.
 
 Ideally, I will have a system where I specify a topic and the system starts creating content periodically about that topic.
 The topic I chose to post about is _Mental Models_. There are several mental models (wide range) and each one is rich (deep range).
 
-Since these are the first days of the system many things will be manual or hard-coded.
+These are the first days of the system, so many things are done manually or hard-coded.
 
-I created my own agent called _planner_. Its task is to choose a mental model and explain it in a series of tweets to be posted in a thread.
+I created a simple agent called _planner_. Its task is to choose a mental model and explain it in a series of tweets to be posted in a thread.
 
 ```
 prompt: Explain the details of the mental model "{model}" in a series of tweets.
@@ -50,7 +52,7 @@ const promptTemplate = ChatPromptTemplate.fromMessages([
 // The model
 const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0.7 });
 
-// The parse
+// The parser
 const parser = new StringOutputParser();
 
 // The chain
@@ -75,7 +77,14 @@ second tweet
 last tweet
 ```
 
-I process that `output` and save it to a `jsonl` file. This is the file read by the [Playwright Script that posts the thread](/blog/thread-using-playwright).
+I process that `output` and save it to a `jsonl` file. This file is then read by the [Playwright Script that posts the thread](/blog/thread-using-playwright).
+
+```json
+{ "tweet": "first tweet"}
+{ "tweet": "second tweet"}
+...
+{ "tweet": "last tweet"}
+```
 
 Eventually, I will update both systems to interact with each other. One will produce the content and the other one will post it.
 For the time being, I execute the script to generate the content manually, move the file and run the script to publish the thread using Playwright.
